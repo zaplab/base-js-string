@@ -1,4 +1,38 @@
-# base-js-string
+# zap-base-js-string
 
-just translating (and testing) some old code to es6 with modules,
-nothing to see here ;-)
+just translating (and testing) some old code to ES6, nothing to see here ;-)
+
+## Install
+```
+$ npm install zap-base-js-string
+```
+
+## Usage
+```js
+import {
+    capitalize,
+    capitalizeFirstLetter,
+    camelize,
+    dasherize,
+} from 'zap-base-js-string';
+```
+
+### capitalize
+```js
+capitalize('test string'); // 'Test String'
+```
+
+### capitalizeFirstLetter
+```js
+capitalizeFirstLetter('test string'); // 'Test string'
+```
+
+### camelize
+```js
+camelize('test-string'); // 'testString'
+```
+
+### dasherize
+```js
+dasherize('TestString'); // 'test-string'
+```
