@@ -12,6 +12,15 @@ const gutil = require('gulp-util');
 const webpack = require('webpack');
 const path = require('path');
 
+function onWarning(error) {
+    gutil.log(error);
+}
+
+function onError(error) {
+    gutil.log(error);
+    process.exit(1);
+}
+
 gulp.task('clean', gulpCallback => {
     del([
         'dist',
@@ -24,9 +33,7 @@ gulp.task('eslint', () => {
             configFile: 'tests/.eslintrc',
         }))
         .pipe(eslint.format())
-        .on('error', error => {
-            console.error('' + error);
-        });
+        .on('error', onWarning);
 });
 
 // for easier debugging of the generated spec bundle
@@ -60,6 +67,11 @@ gulp.task('specs', gulpCallback => {
         configFile: __dirname + '/karma.config.js',
         singleRun: true,
     }, () => {
+    }, karmaExitCode => {
+        if (karmaExitCode !== 0) {
+            process.exit(1);
+        }
+
         gulpCallback();
     });
 });
@@ -102,13 +114,14 @@ gulp.task('js', [
     return gulp.src('src/*.js')
         .pipe(babel())
         .pipe(gulp.dest('dist'))
-        .on('error', error => {
-            console.error('' + error);
-        });
+        .on('error', onError);
 });
 
-gulp.task('default', ['clean'], gulpCallback => {
+gulp.task('default', [
+    'clean',
+], gulpCallback => {
     runSequence(
+        'test',
         'js',
         gulpCallback
     );

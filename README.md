@@ -1,4 +1,4 @@
-# zap-base-js-string
+# zap-base-js-string [![Build Status](https://travis-ci.org/zaplab/base-js-string.svg?branch=master)](https://travis-ci.org/zaplab/base-js-string)
 
 just translating (and testing) some old code to ES6, nothing to see here ;-)
 
