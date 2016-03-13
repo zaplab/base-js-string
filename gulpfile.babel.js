@@ -40,7 +40,7 @@ gulp.task('specs:debug', gulpCallback => {
         output: {
             path: 'tests/spec-debug/',
             filename: 'bundle.js',
-        }
+        },
     });
 
     webpack(webpackConfig, (err, stats) => {
