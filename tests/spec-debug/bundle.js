@@ -101,6 +101,20 @@
 	            expect((0, _zapBaseJsString.dasherize)('abc-def-ghi')).toEqual('abc-def-ghi');
 	        });
 	    });
+
+	    describe('slugify', function () {
+	        it('slugify(" 12345@# tRaLala _*( ) ") should return "12345-tralala"', function () {
+	            expect((0, _zapBaseJsString.slugify)(' 12345@# tRaLala _*( ) ')).toEqual('12345-tralala');
+	            expect((0, _zapBaseJsString.slugify)(' 1-2345@# tRaLala _*( ) ')).toEqual('1-2345-tralala');
+	            expect((0, _zapBaseJsString.slugify)(' 1_2345@# tRaLala _*( ) ')).toEqual('1_2345-tralala');
+	        });
+
+	        it('slugify(" 12345@# tRaLala _*( ) ", "_") should return "12345_tralala"', function () {
+	            expect((0, _zapBaseJsString.slugify)(' 12345@# tRaLala _*( ) ', '_')).toEqual('12345_tralala');
+	            expect((0, _zapBaseJsString.slugify)(' 1-2345@# tRaLala _*( ) ', '_')).toEqual('1-2345_tralala');
+	            expect((0, _zapBaseJsString.slugify)(' 1_2345@# tRaLala _*( ) ', '_')).toEqual('1_2345_tralala');
+	        });
+	    });
 	});
 
 /***/ },
@@ -116,6 +130,7 @@
 	exports.capitalizeFirstLetter = capitalizeFirstLetter;
 	exports.camelize = camelize;
 	exports.dasherize = dasherize;
+	exports.slugify = slugify;
 
 	/**
 	 * @param {String} value
@@ -153,6 +168,17 @@
 	function dasherize(value) {
 	    // thanks to zeptojs
 	    return value.replace(/::/g, '/').replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/([a-z\d])([A-Z])/g, '$1_$2').replace(/_/g, '-').toLowerCase();
+	}
+
+	/**
+	 * @param {String} value
+	 * @param {String} [separator] allows '-' or '_'
+	 * @returns {String}
+	 */
+	function slugify(value) {
+	    var separator = arguments.length <= 1 || arguments[1] === undefined ? '-' : arguments[1];
+
+	    return value.toString().trim().toLowerCase().replace(/[^\w\s_-]/g, '').replace(/[\s]+/g, separator).replace(/[_-]{2,}/g, separator).replace(/^_+|_+$/g, '').replace(/^-+|-+$/g, '');
 	}
 
 /***/ }

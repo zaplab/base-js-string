@@ -38,3 +38,19 @@ export function dasherize(value) {
         .replace(/_/g, '-')
         .toLowerCase();
 }
+
+/**
+ * @param {String} value
+ * @param {String} [separator] allows '-' or '_'
+ * @returns {String}
+ */
+export function slugify(value, separator = '-') {
+    return value.toString()
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\s_-]/g, '')
+        .replace(/[\s]+/g, separator)
+        .replace(/[_-]{2,}/g, separator)
+        .replace(/^_+|_+$/g, '')
+        .replace(/^-+|-+$/g, '');
+}
