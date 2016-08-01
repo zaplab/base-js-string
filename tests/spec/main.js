@@ -4,6 +4,7 @@ import {
     capitalizeFirstLetter as zapBaseStringCapitalizeFirstLetter,
     camelize as zapBaseStringCamelize,
     dasherize as zapBaseStringDasherize,
+    slugify as zapBaseStringSlugify,
 } from 'zap-base-js-string';
 
 describe('zap-base-js-string', () => {
@@ -57,6 +58,20 @@ describe('zap-base-js-string', () => {
 
         it('dasherize("abc-def-ghi") should return "abc-def-ghi"', () => {
             expect(zapBaseStringDasherize('abc-def-ghi')).toEqual('abc-def-ghi');
+        });
+    });
+
+    describe('slugify', () => {
+        it('slugify(" 12345@# tRaLala _*( ) ") should return "12345-tralala"', () => {
+            expect(zapBaseStringSlugify(' 12345@# tRaLala _*( ) ')).toEqual('12345-tralala');
+            expect(zapBaseStringSlugify(' 1-2345@# tRaLala _*( ) ')).toEqual('1-2345-tralala');
+            expect(zapBaseStringSlugify(' 1_2345@# tRaLala _*( ) ')).toEqual('1_2345-tralala');
+        });
+
+        it('slugify(" 12345@# tRaLala _*( ) ", "_") should return "12345_tralala"', () => {
+            expect(zapBaseStringSlugify(' 12345@# tRaLala _*( ) ', '_')).toEqual('12345_tralala');
+            expect(zapBaseStringSlugify(' 1-2345@# tRaLala _*( ) ', '_')).toEqual('1-2345_tralala');
+            expect(zapBaseStringSlugify(' 1_2345@# tRaLala _*( ) ', '_')).toEqual('1_2345_tralala');
         });
     });
 });
